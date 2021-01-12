@@ -6,6 +6,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#define BUFFERSIZE 1024
 
 void cause_segfault() {
     char* ptr = NULL;
@@ -65,11 +70,11 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (output) {
-        int ofd = open(output, O_RDONLY);
+    if (output) {   
+        int ofd = creat(output, S_IRWXU); //second parameter - who can do modifcations to the file
         if (ofd >= 0) {
             close(1);
-            dup(ofd);
+            dup(ofd);  //Make the lowest available file descriptor to point to the same file as fd.
             close(ofd);
         }
         else {
@@ -83,7 +88,12 @@ int main(int argc, char *argv[]) {
     }
 
     //copies standard input to standard output by read(2)-ing from file descriptor 0 (until encountering an end of file) and write(2)-ing to file descriptor 1
-    
+    char buf[BUFFERSIZE];
+    ssize_t ret;
+    while ((ret = read(0, buf, 1)) > 0) //(src, buffer, bytes read)
+        write(1, buf, 1);   //(des_fd, buffer, bytes written)
 
+    close(0);
+    close(1);
     exit(0);
 }
