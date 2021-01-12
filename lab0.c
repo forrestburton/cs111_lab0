@@ -19,14 +19,15 @@ void cause_segfault() {
 }
 
 void handle_sigint(int sig) {
-    fprintf(stderr, "Segmentation fault caught");
+    fprintf(stderr, "--catch Exit code 4: Segmentation fault caught\n", strerror(errno));
     exit(4);
 }
 
 int main(int argc, char *argv[]) {
     char* input = NULL;
     char* output = NULL;
-    bool seg_fault = 0;
+    int seg_fault = 0;
+    int c;
 
     while(1) {
         int option_index = 0;
@@ -52,7 +53,7 @@ int main(int argc, char *argv[]) {
                 signal(SIGSEGV, handle_sigint);
                 break;
             default:
-                printf("unrecognized argument %o ??\n", c);
+                printf("accepted options are: [--input=inputFile --output=outputFile --segfault --catch]");
                 exit(1);
         }
     }
@@ -65,7 +66,7 @@ int main(int argc, char *argv[]) {
             close(ifd);
         }
         else {
-            fprintf(stderr, "--input error while opening the file: %s , which was caused by: %s\n", input, strerror(errno));
+            fprintf(stderr, "--input error while opening the file: %s, which was caused by: %s\n", input, strerror(errno));
             exit(2);
         }
     }
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]) {
             close(ofd);
         }
         else {
-            fprintf(stderr, "--output error while opening the file: %s , which was caused by: %s\n", output, strerror(errno));
+            fprintf(stderr, "--output error while opening the file: %s, which was caused by: %s\n", output, strerror(errno));
             exit(3);
         }
     }

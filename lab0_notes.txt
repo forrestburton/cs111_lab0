@@ -1,0 +1,6 @@
+signal(2)
+read(2)
+write(2)
+getopt_long(3)
+
+Discussions also very helpful
