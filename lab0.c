@@ -1,3 +1,8 @@
+//NAME: Forrest Burton
+//EMAIL: burton.forrest10@gmail.com
+//ID: 005324612
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -55,7 +60,7 @@ int main(int argc, char *argv[]) {
                 signal(SIGSEGV, handle_sigint);
                 break;
             default:
-                printf("accepted options are: [--input=inputFile --output=outputFile --segfault --catch]");
+                printf("accepted options are: [--input=inputFile --output=outputFile --segfault --catch]\n");
                 exit(1);
         }
     }
