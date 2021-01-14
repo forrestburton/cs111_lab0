@@ -18,9 +18,11 @@ void cause_segfault() {
     return;
 }
 
-void handle_sigint(int sig) {
-    fprintf(stderr, "--catch Exit code 4: Segmentation fault caught\n", strerror(errno));
-    exit(4);
+void handle_sigint(int seg) {
+    if (seg == SIGSEGV) {
+        fprintf(stderr, "--catch Exit code 4: Segmentation fault caught\n");
+        exit(4);
+    }
 }
 
 int main(int argc, char *argv[]) {
