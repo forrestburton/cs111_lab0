@@ -10,7 +10,7 @@ clean:
 		rm -f lab0 *tar.gz
 
 dist:
-		tar -czvf lab0-005324612.tar.gz lab0.c Makefile README backtrace.png breakpoint.png
+		tar -czvf lab0-005324612.tar.gz lab0.c Makefile README backtrace.png breakpoint.png test.sh
 
 check:
 		./test.sh
